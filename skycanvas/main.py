@@ -23,7 +23,6 @@ def list():
     """Show the list of constellations"""
     print("TODO")
 
-
 @app.command()
 def version():
     """Show SkyCanvas version"""
@@ -32,7 +31,7 @@ def version():
 @app.command()
 def logo():
     """Show SkyCanvas logo"""
-show_logo()
+    show_logo()
 
 if __name__ == "__main__":
     app()

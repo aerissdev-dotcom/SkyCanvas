@@ -137,7 +137,7 @@ CONSTELLATIONS = {
 
     "taurus": {
         "name": "Taurus",
-        "common-name": "The Bull",
+        "common_name": "The Bull",
 
         "hemisphere": "Northern",
 
