@@ -1,7 +1,7 @@
 import typer
 from rich import print
 from skycanvas.logo import show_logo
-
+from skycanvas.constellations import CONSTELLATIONS
 app = typer.Typer(name="skycanvas", help="ASCII constellation viewer powered by astronomical data.")
 
 # Commands:
