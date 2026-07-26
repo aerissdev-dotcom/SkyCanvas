@@ -180,7 +180,7 @@ CONSTELLATIONS = {
             "February"
         ],
 
-        "brightest": "Pollux",
+        "brightest_star": "Pollux",
 
         "stars": [
             "Castor",
@@ -212,6 +212,8 @@ CONSTELLATIONS = {
             "April",
             "May"
         ],
+
+        "brightest_star": "Regulus",
 
         "stars": [
             "Regulus",
@@ -245,7 +247,7 @@ CONSTELLATIONS = {
             "September"
         ],
 
-        "brightest star": "Deneb",
+        "brightest_star": "Deneb",
 
         "stars": [
             "Deneb",
