@@ -32,7 +32,6 @@ CONSTELLATIONS = {
             ["Rigel", "Alnilam"]
         ]
     },
-    "..."
     
     "ursa_major": {
         "name": "Ursa Major",
@@ -40,7 +39,7 @@ CONSTELLATIONS = {
 
         "hemisphere": "Northern",
 
-        "best_visible_moths": [
+        "best_visible_months": [
             "March",
             "April",
             "May"
@@ -269,7 +268,7 @@ CONSTELLATIONS = {
         "name": "Lyra",
         "common_name": "The Lyre",
 
-        "hemisphere": "",
+        "hemisphere": "Northern",
 
         "best_visible_months": [
             "July",
@@ -360,7 +359,7 @@ CONSTELLATIONS = {
     },
     "andromeda": {
         "name": "Andromeda",
-        "common_name": "The Princess",
+        "common_name": "The Chained Princess",
 
         "hemisphere": "Northern",
 
@@ -376,17 +375,17 @@ CONSTELLATIONS = {
             "Alpheratz",
             "Mirach",
             "Almach",
-            "Delta Andromeda",
-            "Mu Andromeda",
-            "Upsilon Andromeda"
+            "Delta Andromedae",
+            "Mu Andromedae",
+            "Upsilon Andromedae"
         ],
 
         "connections": [
             ["Alpheratz", "Mirach"],
             ["Mirach", "Almach"],
-            ["Mirach", "Delta Andromeda"],
-            ["Delta Andromeda", "Mu Andromeda"],
-            ["Mu Andromeda", "Upsilon Andromeda"]
+            ["Mirach", "Delta Andromedae"],
+            ["Delta Andromedae", "Mu Andromedae"],
+            ["Mu Andromedae", "Upsilon Andromedae"]
         ]
     },
 
@@ -418,7 +417,7 @@ CONSTELLATIONS = {
             ["Sirius", "Mirzam"],
             ["Sirius", "Wezen"],
             ["Wezen", "Adhara"],
-            ["Adhara", "Aldura"],
+            ["Adhara", "Aludra"],
             ["Wezen", "Furud"],
             ["Furud", "Omicron² Canis Majoris"]
         ]
@@ -565,7 +564,7 @@ CONSTELLATIONS = {
 
         "stars": [
             "Hamal",
-            "Shertan",
+            "Sheratan",
             "Mesarthim",
             "Botein",
             "41 Arietis"
