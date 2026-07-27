@@ -4,6 +4,7 @@ from rich.columns import Columns
 from rich.table import Table
 from skycanvas.logo import show_logo
 from skycanvas.constellations import CONSTELLATIONS
+from skycanvas.astronomy import get_star_position
 import random
 
 list_of_constellations = ["orion", "ursa_major", "cassiopeia", "scorpius", "taurus", "gemini",  "leo", "cygnus", "lyra", "aquila", "pegasus", "andromeda", "canis_major", "canis_minor", "draco", "sagittarius", "virgo", "aries", "capricornus", "pisces", "ursa_minor", "perseus", "cepheus", "hydra", "centaurus", "crux", "phoenix", "libra", "aquarius", "cancer"]
@@ -13,17 +14,29 @@ app = typer.Typer(name="skycanvas", help="ASCII constellation viewer powered by 
 # Commands:
 
 # - skycanvas version, skycanvas -v, skycanvas --version
-# - skycanvas list
+# - skycanvas list [DONE]
 # - skycanvas compare [Constellation 1 / tonight] vs [Constellation 2 / tonight]
 # - skycanvas tonight
 # - skycanvas location [city]
 # - skycanvas --export [constellation / tonight] png / jpg / svg / bmp
 # - skycanvas logo [DONE]
 # - skycanvas --help [DONE]
-# - skycanvas man
+# - skycanvas man [DONE]
 # - skycanvas rand
 # - skycanvas [Constallation]
 
+
+def version_callback(value: bool):
+    if value:
+        print("SkyCanvas v0.1.0")
+        raise typer.Exit()
+
+@app.callback(invoke_without_command=True)
+def main(ctx: typer.Context, version: bool = typer.Option(None, "--version", "-v", callback=version_callback, is_eager=True, help="Show SkyCanvas version.")):
+    if ctx.invoked_subcommand is None:
+        show_logo()
+        print("\nRun 'skycanvas --help' to see available commands.")
+        raise typer.Exit()
 
 @app.command()
 def list():
@@ -63,8 +76,7 @@ def rand():
     """Show random constellation"""
     randIndex = list_of_constellations[random.randint(0, 29)]
 
-    for i in (CONSTELLATIONS[randIndex]["best_visible_months"]):
-        best_visible_months = ", ".join(CONSTELLATIONS[randIndex]["best_visible_months"])
+    best_visible_months = ", ".join(CONSTELLATIONS[randIndex]["best_visible_months"])
 
     for i in (CONSTELLATIONS[randIndex]["stars"]):
             stars = ", ".join(CONSTELLATIONS[randIndex]["stars"])
@@ -89,6 +101,68 @@ def rand():
 
     table.add_row(CONSTELLATIONS[randIndex]["name"], CONSTELLATIONS[randIndex]["common_name"], best_visible_months, CONSTELLATIONS[randIndex]["brightest_star"], stars, formatted_connections)
     print(table)
+
+@app.command()
+def man():
+    """Show the SkyCanvas manual."""
+    show_logo()
+
+    print("""
+[bold cyan]SkyCanvas Manual[/bold cyan]
+
+
+[bold red]NAME[/bold red]
+
+[bold yellow]SkyCanvas[/bold yellow] - ASCII constellation viewer powered by astronomical data.
+
+[bold red]USAGE[/bold red]
+
+  [bold yellow]skycanvas[/bold yellow] [COMMAND]
+          
+
+[bold red]COMMANDS[/bold red]
+
+  [bold cyan]version[/bold cyan]       Show SkyCanvas version.
+
+  [bold cyan]man[/bold cyan]           Show SkyCanvas manual.
+
+  [bold cyan]compare[/bold cyan]       Compare two different constellations.
+
+  [bold cyan]tonight[/bold cyan]       Show today's stars alignment in your city.
+
+  [bold cyan]list[/bold cyan]          Display the list of available constellations.
+
+  [bold cyan]--export[/bold cyan]      Export the constellation or the view of tonight's stars to an image form.
+
+  [bold cyan]rand[/bold cyan]          Show random constellation and its data.
+
+  [bold cyan]--help[/bold cyan]        Show command help.
+          
+  [bold cyan]constellation[/bold cyan] Show a constellation of choice.
+
+  [bold cyan]logo[/bold cyan]          Show a logo of SkyCanvas.
+
+  [bold cyan]location[/bold cyan]      Establish a city you live in (only for stars alignment statistics)
+
+[bold red]AUTHOR[/bold red]
+
+  aeriss-dev
+
+
+[bold red]GITHUB[/bold red]
+
+  [link=https://github.com/aerissdev-dotcom]github.com/aerissdev-dotcom[/link]
+
+
+[bold red]LICENSE[/bold red]
+
+  MIT License
+
+
+[bold red]VERSION[/bold red]
+
+  0.1.0
+""")
 
 if __name__ == "__main__":
     app()
