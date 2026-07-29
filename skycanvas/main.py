@@ -4,7 +4,7 @@ from rich.columns import Columns
 from rich.table import Table
 from skycanvas.logo import show_logo
 from skycanvas.constellations import CONSTELLATIONS
-from skycanvas.astronomy import get_star_position
+from skycanvas.render import render_constellation
 import random
 
 list_of_constellations = ["orion", "ursa_major", "cassiopeia", "scorpius", "taurus", "gemini",  "leo", "cygnus", "lyra", "aquila", "pegasus", "andromeda", "canis_major", "canis_minor", "draco", "sagittarius", "virgo", "aries", "capricornus", "pisces", "ursa_minor", "perseus", "cepheus", "hydra", "centaurus", "crux", "phoenix", "libra", "aquarius", "cancer"]
@@ -23,7 +23,7 @@ app = typer.Typer(name="skycanvas", help="ASCII constellation viewer powered by 
 # - skycanvas --help [DONE]
 # - skycanvas man [DONE]
 # - skycanvas rand
-# - skycanvas [Constallation]
+# - skycanvas constellation [Constallation]
 
 
 def version_callback(value: bool):
@@ -102,6 +102,10 @@ def rand():
     table.add_row(CONSTELLATIONS[randIndex]["name"], CONSTELLATIONS[randIndex]["common_name"], best_visible_months, CONSTELLATIONS[randIndex]["brightest_star"], stars, formatted_connections)
     print(table)
 
+    print("\n")
+    print(f"[bold cyan]{randIndex}[/bold cyan]")
+    render_constellation(randIndex)
+
 @app.command()
 def man():
     """Show the SkyCanvas manual."""
@@ -163,6 +167,69 @@ def man():
 
   0.1.0
 """)
+
+@app.command()
+def test_render():
+    """Test constellation renderer"""
+    render_constellation("aries")
+
+@app.command()
+def constellation(name: str):
+    """Show selected constellation"""
+
+    name = name.lower()
+
+    if name not in CONSTELLATIONS:
+        print(f"Unknown constellation: {name}")
+        return
+
+    best_visible_months = ", ".join(
+        CONSTELLATIONS[name]["best_visible_months"]
+    )
+
+    stars = ", ".join(
+        CONSTELLATIONS[name]["stars"]
+    )
+
+    connections_list = CONSTELLATIONS[name]["connections"]
+
+    formatted_connections = "\n".join(
+        " -> ".join(pair)
+        for pair in connections_list
+    )
+
+
+    table = Table(
+        title="[bold cyan]Constellation Information[/bold cyan]",
+        title_justify="left",
+        show_lines=True,
+        border_style="cyan"
+    )
+
+
+    table.add_column("Name", vertical="middle")
+    table.add_column("Common Name", vertical="middle")
+    table.add_column("Best Visible Months", vertical="middle")
+    table.add_column("Brightest Star", vertical="middle")
+    table.add_column("Stars", vertical="middle")
+    table.add_column("Connections", vertical="middle")
+
+
+    table.add_row(
+        CONSTELLATIONS[name]["name"],
+        CONSTELLATIONS[name]["common_name"],
+        best_visible_months,
+        CONSTELLATIONS[name]["brightest_star"],
+        stars,
+        formatted_connections
+    )
+
+
+    print(table)
+
+    print("\n")
+
+    render_constellation(name)
 
 if __name__ == "__main__":
     app()
