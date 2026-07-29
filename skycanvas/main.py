@@ -4,8 +4,12 @@ from rich.columns import Columns
 from rich.table import Table
 from skycanvas.logo import show_logo
 from skycanvas.constellations import CONSTELLATIONS
+from skycanvas.tonight import show_tonight
 from skycanvas.render import render_constellation
+from skycanvas.compare import compare_constellations
 import random
+
+
 
 list_of_constellations = ["orion", "ursa_major", "cassiopeia", "scorpius", "taurus", "gemini",  "leo", "cygnus", "lyra", "aquila", "pegasus", "andromeda", "canis_major", "canis_minor", "draco", "sagittarius", "virgo", "aries", "capricornus", "pisces", "ursa_minor", "perseus", "cepheus", "hydra", "centaurus", "crux", "phoenix", "libra", "aquarius", "cancer"]
 
@@ -13,7 +17,7 @@ app = typer.Typer(name="skycanvas", help="ASCII constellation viewer powered by 
 
 # Commands:
 
-# - skycanvas version, skycanvas -v, skycanvas --version
+# - skycanvas version, skycanvas -v, skycanvas --version [DONE]
 # - skycanvas list [DONE]
 # - skycanvas compare [Constellation 1 / tonight] vs [Constellation 2 / tonight]
 # - skycanvas tonight
@@ -22,8 +26,8 @@ app = typer.Typer(name="skycanvas", help="ASCII constellation viewer powered by 
 # - skycanvas logo [DONE]
 # - skycanvas --help [DONE]
 # - skycanvas man [DONE]
-# - skycanvas rand
-# - skycanvas constellation [Constallation]
+# - skycanvas rand [DONE]
+# - skycanvas constellation [Constallation] [DONE]
 
 
 def version_callback(value: bool):
@@ -230,6 +234,16 @@ def constellation(name: str):
     print("\n")
 
     render_constellation(name)
+
+@app.command()
+def tonight():
+    """Show visible constellations tonight."""
+    show_tonight()
+
+@app.command()
+def compare(first:str, second:str):
+    """Compare two constellations or tonight's visible constellations."""
+    compare_constellations(first, second)
 
 if __name__ == "__main__":
     app()

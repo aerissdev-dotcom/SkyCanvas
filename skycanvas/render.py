@@ -1,6 +1,6 @@
 from skycanvas.coordinates import COORDINATES
 from skycanvas.constellations import CONSTELLATIONS
-
+from rich import print
 
 WIDTH = 45
 HEIGHT = 22
@@ -72,7 +72,12 @@ def draw_star_name(canvas, x, y, name):
 def render_canvas(canvas):
 
     for row in canvas:
-        print("".join(row))
+
+        line = "".join(row)
+
+        line = line.replace("*", "[bold yellow]*[/bold yellow]")
+
+        print(line)
 
 
 
@@ -89,9 +94,6 @@ def render_constellation(name: str):
 
     stars = COORDINATES[name]
 
-
-    # Draw connections first
-
     for star1, star2 in CONSTELLATIONS[name]["connections"]:
 
         if star1 in stars and star2 in stars:
@@ -106,9 +108,6 @@ def render_constellation(name: str):
                 x2,
                 y2
             )
-
-
-    # Draw stars and names
 
     for star_name, (x, y) in stars.items():
 
@@ -127,3 +126,28 @@ def render_constellation(name: str):
 
 
     render_canvas(canvas)
+
+def get_constellation_lines(name: str):
+    name = name.lower()
+
+    if name not in COORDINATES:
+        return []
+
+    canvas = create_canvas()
+    stars = COORDINATES[name]
+
+    for star1, star2 in CONSTELLATIONS[name]["connections"]:
+        if star1 in stars and star2 in stars:
+            x1, y1 = stars[star1]
+            x2, y2 = stars[star2]
+
+            draw_line(canvas, x1, y1, x2, y2)
+
+    for star_name, (x, y) in stars.items():
+        draw_star(canvas, x, y)
+        draw_star_name(canvas, x, y, star_name)
+
+    return [
+        "".join(row)
+        for row in canvas
+    ]
