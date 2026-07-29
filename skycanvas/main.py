@@ -5,7 +5,7 @@ from rich.table import Table
 from skycanvas.logo import show_logo
 from skycanvas.constellations import CONSTELLATIONS
 from skycanvas.tonight import show_tonight
-from skycanvas.render import render_constellation
+from skycanvas.render import render_constellation, animate_constellation
 from skycanvas.compare import compare_constellations
 import random
 
@@ -19,9 +19,9 @@ app = typer.Typer(name="skycanvas", help="ASCII constellation viewer powered by 
 
 # - skycanvas version, skycanvas -v, skycanvas --version [DONE]
 # - skycanvas list [DONE]
-# - skycanvas compare [Constellation 1 / tonight] vs [Constellation 2 / tonight]
-# - skycanvas tonight
-# - skycanvas location [city]
+# - skycanvas compare [Constellation 1 / tonight] vs [Constellation 2 / tonight] [DONE]
+# - skycanvas tonight [DONE]
+# - skycanvas constellation [Constellation] --animate
 # - skycanvas --export [constellation / tonight] png / jpg / svg / bmp
 # - skycanvas logo [DONE]
 # - skycanvas --help [DONE]
@@ -105,6 +105,8 @@ def rand():
 
     table.add_row(CONSTELLATIONS[randIndex]["name"], CONSTELLATIONS[randIndex]["common_name"], best_visible_months, CONSTELLATIONS[randIndex]["brightest_star"], stars, formatted_connections)
     print(table)
+    print("\n")
+    print("[bold yellow]Note that some star names might not appear on the ASCII Art - it is an intended feature.[/bold yellow]")
 
     print("\n")
     print(f"[bold cyan]{randIndex}[/bold cyan]")
@@ -150,12 +152,11 @@ def man():
 
   [bold cyan]logo[/bold cyan]          Show a logo of SkyCanvas.
 
-  [bold cyan]location[/bold cyan]      Establish a city you live in (only for stars alignment statistics)
+  [bold cyan]constellation --animate[/bold cyan] Show a constellation of choice with animation.
 
 [bold red]AUTHOR[/bold red]
 
   aeriss-dev
-
 
 [bold red]GITHUB[/bold red]
 
@@ -173,12 +174,7 @@ def man():
 """)
 
 @app.command()
-def test_render():
-    """Test constellation renderer"""
-    render_constellation("aries")
-
-@app.command()
-def constellation(name: str):
+def constellation(name: str, animate: bool = False):
     """Show selected constellation"""
 
     name = name.lower()
@@ -229,21 +225,43 @@ def constellation(name: str):
     )
 
 
-    print(table)
+    if animate:
 
-    print("\n")
+        animate_constellation(name)
 
-    render_constellation(name)
+        print("\n")
 
+        print(table)
+        print("\n")
+        print("[bold yellow]Note that some star names might not appear on the ASCII Art - it is an intended feature.[/bold yellow]")
+
+    else:
+
+        print(table)
+        print("\n")
+        print("[bold yellow]Note that some star names might not appear on the ASCII Art - it is an intended feature.[/bold yellow]")
+
+        print("\n")
+
+        render_constellation(name)
 @app.command()
 def tonight():
     """Show visible constellations tonight."""
+    print("\n")
+    print("[bold yellow]Note that some star names might not appear on the ASCII Art - it is an intended feature.[/bold yellow]")
+
     show_tonight()
 
 @app.command()
 def compare(first:str, second:str):
     """Compare two constellations or tonight's visible constellations."""
+    print("\n")
+    print("[bold yellow]Note that some star names might not appear on the ASCII Art - it is an intended feature.[/bold yellow]")
+
     compare_constellations(first, second)
 
 if __name__ == "__main__":
     app()
+
+
+

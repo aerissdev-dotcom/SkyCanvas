@@ -1,5 +1,6 @@
 from skycanvas.render import get_constellation_lines
 from skycanvas.tonight import get_visible_constellations
+from skycanvas.constellations import CONSTELLATIONS
 from rich import print
 from rich.text import Text
 
@@ -49,6 +50,16 @@ def compare_constellations(first, second):
 
     first = first.lower()
     second = second.lower()
+
+
+    if first != "tonight" and first not in CONSTELLATIONS:
+        print(f"Unknown constellation: {first}")
+        return
+
+
+    if second != "tonight" and second not in CONSTELLATIONS:
+        print(f"Unknown constellation: {second}")
+        return
 
 
     first_list = (
