@@ -246,8 +246,8 @@ COORDINATES = {
     },
 
     "libra": {
-        "Zubeneschamali": (14, 8),
-        "Zebenelgenubi": (22, 8),
+        "Zubeneschamali": (8, 8),
+        "Zebenelgenubi": (25, 8),
         "Brachium": (28, 14),
         "Zubenelhakrabi": (34, 12)
     },

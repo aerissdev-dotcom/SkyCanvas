@@ -7,9 +7,8 @@ from skycanvas.constellations import CONSTELLATIONS
 from skycanvas.tonight import show_tonight
 from skycanvas.render import render_constellation, animate_constellation
 from skycanvas.compare import compare_constellations
+from skycanvas.export import export, export_help
 import random
-
-
 
 list_of_constellations = ["orion", "ursa_major", "cassiopeia", "scorpius", "taurus", "gemini",  "leo", "cygnus", "lyra", "aquila", "pegasus", "andromeda", "canis_major", "canis_minor", "draco", "sagittarius", "virgo", "aries", "capricornus", "pisces", "ursa_minor", "perseus", "cepheus", "hydra", "centaurus", "crux", "phoenix", "libra", "aquarius", "cancer"]
 
@@ -36,7 +35,37 @@ def version_callback(value: bool):
         raise typer.Exit()
 
 @app.callback(invoke_without_command=True)
-def main(ctx: typer.Context, version: bool = typer.Option(None, "--version", "-v", callback=version_callback, is_eager=True, help="Show SkyCanvas version.")):
+def main(
+    ctx: typer.Context,
+    version: bool = typer.Option(
+        None,
+        "--version",
+        "-v",
+        callback=version_callback,
+        is_eager=True,
+        help="Show SkyCanvas version."
+    ),
+    export_target: str = typer.Option(
+        None,
+        "--export"
+    )
+):
+    if export_target:
+
+        export_format = ctx.args[0] if ctx.args else None
+
+        if export_format is None:
+            print("[bold red]Missing format. Example: skycanvas --export orion png[/bold red]")
+            raise typer.Exit()
+
+        export(
+            export_target,
+            export_format
+        )
+
+        raise typer.Exit()
+
+
     if ctx.invoked_subcommand is None:
         show_logo()
         print("\nRun 'skycanvas --help' to see available commands.")
@@ -154,6 +183,8 @@ def man():
 
   [bold cyan]constellation --animate[/bold cyan] Show a constellation of choice with animation.
 
+  [bold cyan]export-help[/bold cyan]   Show a helper for exporting constellation to the file.
+
 [bold red]AUTHOR[/bold red]
 
   aeriss-dev
@@ -260,8 +291,10 @@ def compare(first:str, second:str):
 
     compare_constellations(first, second)
 
+@app.command(name="export-help")
+def exhelp():
+    """Show export help."""
+    export_help()
+
 if __name__ == "__main__":
     app()
-
-
-
