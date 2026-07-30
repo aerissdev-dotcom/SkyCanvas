@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "skycanvas"
+version = "0.1.0"
+description = "ASCII constellation viewer powered by astronomical data."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+
+authors = [
+    { name = "aeriss-dev" }
+]
+
+keywords = [
+    "astronomy",
+    "ascii",
+    "terminal",
+    "cli",
+    "constellation",
+    "stars"
+]
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Environment :: Console",
+    "Topic :: Scientific/Engineering :: Astronomy"
+]
+
+dependencies = [
+    "typer",
+    "rich",
+    "pillow",
+    "skyfield"
+]
+
+[project.urls]
+Homepage = "https://github.com/aerissdev-dotcom/SkyCanvas"
+Repository = "https://github.com/aerissdev-dotcom/SkyCanvas"
+
+[project.scripts]
+skycanvas = "skycanvas.main:app"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["skycanvas*"]

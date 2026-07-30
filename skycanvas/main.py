@@ -16,20 +16,6 @@ list_of_constellations = ["orion", "ursa_major", "cassiopeia", "scorpius", "taur
 
 app = typer.Typer(name="skycanvas", help="ASCII constellation viewer powered by astronomical data.")
 
-# Commands:
-
-# - skycanvas version, skycanvas -v, skycanvas --version [DONE]
-# - skycanvas list [DONE]
-# - skycanvas compare [Constellation 1 / tonight] vs [Constellation 2 / tonight] [DONE]
-# - skycanvas tonight [DONE]
-# - skycanvas constellation [Constellation] --animate
-# - skycanvas --export [constellation / tonight] png / jpg / svg / bmp
-# - skycanvas logo [DONE]
-# - skycanvas --help [DONE]
-# - skycanvas man [DONE]
-# - skycanvas rand [DONE]
-# - skycanvas constellation [Constallation] [DONE]
-
 def version_callback(value: bool):
     if value:
         print("SkyCanvas v0.1.0")
@@ -54,7 +40,8 @@ def main(
     ),
     export_args: Optional[Tuple[str, str]] = typer.Option(
         None,
-        "--export"
+        "--export",
+        help="Export a constellation to PNG, JPG, BMP or SVG."
     )
 ):
 
