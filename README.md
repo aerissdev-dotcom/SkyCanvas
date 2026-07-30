@@ -33,6 +33,9 @@ Install SkyCanvas:
 ```bash
 pip install skycanvas
 ```
+Example:
+
+![SkyCanvas Installation](https://raw.githubusercontent.com/aerissdev-dotcom/SkyCanvas/main/screenshots/skyCanvasInstall.gif)
 
 Run:
 
