@@ -18,7 +18,7 @@ app = typer.Typer(name="skycanvas", help="ASCII constellation viewer powered by 
 
 def version_callback(value: bool):
     if value:
-        print("SkyCanvas v0.1.0")
+        print("SkyCanvas v0.1.1")
         raise typer.Exit()
 
 @app.callback(
@@ -87,7 +87,7 @@ def list():
 @app.command()
 def version():
     """Show SkyCanvas version"""
-    print("[bold cyan]SkyCanvas v0.1.0[/bold cyan]")
+    print("[bold cyan]SkyCanvas v0.1.1[/bold cyan]")
 
 @app.command()
 def logo():
@@ -187,7 +187,7 @@ def man():
 
 [bold red]VERSION[/bold red]
 
-  0.1.0
+  0.1.1
 """)
 
 @app.command()
