@@ -1,3 +1,5 @@
+from typing import Optional, Tuple
+
 import typer
 from rich import print
 from rich.columns import Columns
@@ -28,13 +30,18 @@ app = typer.Typer(name="skycanvas", help="ASCII constellation viewer powered by 
 # - skycanvas rand [DONE]
 # - skycanvas constellation [Constallation] [DONE]
 
-
 def version_callback(value: bool):
     if value:
         print("SkyCanvas v0.1.0")
         raise typer.Exit()
 
-@app.callback(invoke_without_command=True)
+@app.callback(
+    invoke_without_command=True,
+    context_settings={
+        "allow_extra_args": True,
+        "ignore_unknown_options": True
+    }
+)
 def main(
     ctx: typer.Context,
     version: bool = typer.Option(
@@ -45,18 +52,15 @@ def main(
         is_eager=True,
         help="Show SkyCanvas version."
     ),
-    export_target: str = typer.Option(
+    export_args: Optional[Tuple[str, str]] = typer.Option(
         None,
         "--export"
     )
 ):
-    if export_target:
 
-        export_format = ctx.args[0] if ctx.args else None
+    if export_args:
 
-        if export_format is None:
-            print("[bold red]Missing format. Example: skycanvas --export orion png[/bold red]")
-            raise typer.Exit()
+        export_target, export_format = export_args
 
         export(
             export_target,
@@ -64,7 +68,6 @@ def main(
         )
 
         raise typer.Exit()
-
 
     if ctx.invoked_subcommand is None:
         show_logo()
@@ -131,7 +134,6 @@ def rand():
     table.add_column("Stars", vertical="middle")
     table.add_column("Connections", vertical="middle")
 
-
     table.add_row(CONSTELLATIONS[randIndex]["name"], CONSTELLATIONS[randIndex]["common_name"], best_visible_months, CONSTELLATIONS[randIndex]["brightest_star"], stars, formatted_connections)
     print(table)
     print("\n")
@@ -148,7 +150,6 @@ def man():
 
     print("""
 [bold cyan]SkyCanvas Manual[/bold cyan]
-
 
 [bold red]NAME[/bold red]
 
@@ -193,11 +194,9 @@ def man():
 
   [link=https://github.com/aerissdev-dotcom]github.com/aerissdev-dotcom[/link]
 
-
 [bold red]LICENSE[/bold red]
 
   MIT License
-
 
 [bold red]VERSION[/bold red]
 
@@ -229,7 +228,6 @@ def constellation(name: str, animate: bool = False):
         for pair in connections_list
     )
 
-
     table = Table(
         title="[bold cyan]Constellation Information[/bold cyan]",
         title_justify="left",
@@ -237,14 +235,12 @@ def constellation(name: str, animate: bool = False):
         border_style="cyan"
     )
 
-
     table.add_column("Name", vertical="middle")
     table.add_column("Common Name", vertical="middle")
     table.add_column("Best Visible Months", vertical="middle")
     table.add_column("Brightest Star", vertical="middle")
     table.add_column("Stars", vertical="middle")
     table.add_column("Connections", vertical="middle")
-
 
     table.add_row(
         CONSTELLATIONS[name]["name"],
@@ -254,7 +250,6 @@ def constellation(name: str, animate: bool = False):
         stars,
         formatted_connections
     )
-
 
     if animate:
 

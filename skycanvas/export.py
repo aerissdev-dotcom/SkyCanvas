@@ -335,4 +335,3 @@ def export_help():
     [-] skycanvas --export tonight jpg
         """
     )
-    
